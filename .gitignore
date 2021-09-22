@@ -1,0 +1,5 @@
+*.swp
+.env
+.env.bak
+docker-compose.override.yml
+node_modules
