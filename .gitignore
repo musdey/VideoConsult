@@ -3,3 +3,6 @@
 .env.bak
 docker-compose.override.yml
 node_modules
+*build/*
+build/
+backend/yarn-error.log
