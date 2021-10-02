@@ -1,5 +1,5 @@
 
-import { Handler, Request, Response } from 'express'
+import { Handler, NextFunction, Request, Response } from 'express'
 import User from '../models/User'
 import errors from '../lib/errors'
 import VerifyMail from '../models/VerifyEmail'
@@ -9,7 +9,7 @@ const secret = process.env.JWT_SECRET || 'test'
 const serverURL = process.env.SERVER_URL || 'http://localhost'
 const validTime = 24 * 60 * 60 * 1000 // 24 hours
 
-const requestEmailVerification: Handler = async (req: Request, res: Response) => {
+const requestEmailVerification: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await User.findOne({ email: req.body.email })
     if (!user) {
@@ -32,11 +32,11 @@ const requestEmailVerification: Handler = async (req: Request, res: Response) =>
     await verifyEmailRequest.save()
     return res.status(200).send({ message: 'Email was sent successfully.' })
   } catch (err) {
-    return res.status(500).send({ message: err })
+    return next(err)
   }
 }
 
-const verifyMail = async (req: Request, res: Response) => {
+const verifyMail = async (req: Request, res: Response, next: NextFunction) => {
   const requestedToken = req.params.token
   if (!requestedToken) {
     return res.status(401).send({ message: 'Token missing.', error: errors.InputMissing })
@@ -62,7 +62,7 @@ const verifyMail = async (req: Request, res: Response) => {
       return res.status(200).send({ message: 'This request timed out. Please request a new E-mail verifaction.' })
     }
   } catch (err) {
-    return res.status(500).send({ message: err })
+    return next(err)
   }
 }
 

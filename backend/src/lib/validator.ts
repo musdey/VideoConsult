@@ -22,23 +22,6 @@ const UserValidator: Validator = new Validator({
   },
   phoneNumber: {
     type: String
-  },
-  address: {
-    city: {
-      type: String
-    },
-    zip: {
-      type: Number
-    },
-    street: {
-      type: String
-    },
-    streetNumber: {
-      type: String
-    },
-    streetExtra: {
-      type: String
-    }
   }
 })
 

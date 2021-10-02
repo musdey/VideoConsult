@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose'
+import mongoose from 'mongoose'
 import { RequestHandler } from 'express'
 
 const dbNotUp: RequestHandler = (req, res, next) => {
@@ -9,10 +9,7 @@ const dbNotUp: RequestHandler = (req, res, next) => {
    * 3 = disconnecting
    */
   if (mongoose.connection.readyState !== 1) {
-    console.error('DB not reachable, return 503')
-    res.status(503)
-    res.json('503 - Server not up yet')
-    return
+    throw new Error("dbnotup")
   }
   next()
 }

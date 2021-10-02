@@ -1,5 +1,5 @@
 'use strict'
-import nodemailer from 'nodemailer'
+import nodemailer, {SentMessageInfo} from 'nodemailer'
 declare global {
   enum MailType {
     OTP = 'OTP',
@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
   }
 })
 
-const sendMail = async (username: string, receiverEmail: string, data: string, type: MailType): Promise<string> => {
+const sendMail = async (username: string, receiverEmail: string, data: string, type: MailType): Promise<SentMessageInfo> => {
   const { subject, content } = buildEmailContent(username, data, type)
 
   if (process.env.NODE_ENV !== 'production') {

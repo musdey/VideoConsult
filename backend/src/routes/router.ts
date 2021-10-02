@@ -35,5 +35,4 @@ router.get(
   [authJwt.verifyToken, authJwt.isAdmin],
   adminBoard
 )
-
 export default router

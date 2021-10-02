@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
-import { Handler, Request, Response } from 'express'
+import { Handler, NextFunction, Request, Response } from 'express'
 import User from '../models/User'
 import Role from '../models/Role'
 import { UserValidator, getValidationErrorData } from '../lib/validator'
@@ -10,7 +10,7 @@ import sendSMS from '../service/smsService'
 const secret = process.env.JWT_SECRET || 'test'
 const EXPIRYTIME = 10 * 60 * 1000 // 10 minutes
 
-const signup: Handler = async (req: Request, res: Response) => {
+const signup: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const validationResult = await UserValidator.validate(req.body)
     if (validationResult.length !== 0) {
@@ -28,11 +28,11 @@ const signup: Handler = async (req: Request, res: Response) => {
     await createdUser.save()
     return res.status(200).send({ message: 'User was registered successfully!' })
   } catch (err) {
-    return res.status(500).send({ message: err })
+    return next(err)
   }
 }
 
-const signin: Handler = async (req: Request, res: Response) => {
+const signin: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await User.findOne({ email: req.body.email })
 
@@ -64,11 +64,11 @@ const signin: Handler = async (req: Request, res: Response) => {
       accessToken: token,
     })
   } catch (err) {
-    return res.status(500).send({ message: err })
+    return next(err)
   }
 }
 
-const requestOTP: Handler = async (req: Request, res: Response) => {
+const requestOTP: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await User.findOne({ email: req.body.email })
 
@@ -89,7 +89,7 @@ const requestOTP: Handler = async (req: Request, res: Response) => {
 
     return res.status(201).send({ message: 'OTP successfully created.' })
   } catch (err) {
-    return res.status(500).send({ message: err })
+    return next(err)
   }
 }
 
@@ -106,7 +106,7 @@ const createAndDeliverOTP = async (user: any) => {
   await sendSMS(user.email, user.phoneNumber, oneTimePwPin)
 }
 
-const signinWithOTP: Handler = async (req: Request, res: Response) => {
+const signinWithOTP: Handler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await User.findOne({ email: req.body.email })
 
@@ -124,7 +124,8 @@ const signinWithOTP: Handler = async (req: Request, res: Response) => {
     }
     const otp = await UserLoginOTP.findOne({ email: req.body.email, otpExpires: { $gt: new Date() } })
     if (!otp || otp.otp !== req.body.otp) {
-      return res.status(401).send({ message: 'OTP not found or incorrect' })
+      //return res.status(401).send({ message: 'OTP not found or incorrect' })
+      return next('OTPERROR')
     }
 
     const token = jwt.sign({ id: user.id }, secret, {
@@ -140,7 +141,7 @@ const signinWithOTP: Handler = async (req: Request, res: Response) => {
       accessToken: token,
     })
   } catch (err) {
-    return res.status(500).send({ message: err })
+    return next(err)
   }
 }
 

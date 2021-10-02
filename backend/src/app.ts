@@ -1,29 +1,31 @@
 import express, { NextFunction, Request, Response } from 'express'
 import router from './routes/router'
 import logger from 'morgan'
-import bodyParser from 'body-parser'
 import cors from 'cors'
 import * as dotenv from 'dotenv'
 import connectDB from './db/connect'
 import initalizeRoles from './db/initalizeRoles'
+import notFoundHandler from "./middleware/not-found-handler";
+import errorHandler from "./middleware/error-handler";
+import dbNotUp from './middleware/db-not-up'
 
 dotenv.config()
 
-const mongodbHost = 'ckd-database'
-const mongodbUser = process.env.MONGO_NON_ROOT_USERNAME || 'user'
-const mongodbPw = process.env.MONGO_NON_ROOT_PASSWORD || 'password'
+const mongodbHost = process.env.MONGODB_HOST || 'localhost'
+const mongodbUser = process.env.MONGO_NON_ROOT_USERNAME || ''
+const mongodbPw = process.env.MONGO_NON_ROOT_PASSWORD || ''
 const mongodbDBName = process.env.MONGO_INITDB_DATABASE || 'ckd-database'
 
 // Connect mongoose
 connectDB(mongodbHost, 27017, mongodbUser, mongodbPw, mongodbDBName, 10000)
 initalizeRoles()
-// initializeTestUser()
 
+// initializeTestUser()
 const app = express()
 
 // Setup middleware
 app.use(logger('dev'))
-// app.use(dbNotUp)
+app.use(dbNotUp)
 app.use(function (req: Request, res: Response, next: NextFunction) {
   res.header(
     'Access-Control-Allow-Headers',
@@ -32,9 +34,6 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   next()
 })
 app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-
 // app.use(express.static(path.join(__dirname, 'public')))
 
 // Setup routes
@@ -42,13 +41,7 @@ app.use('/api', router)
 app.get('/hi', (req, res) => {
   res.json({ message: 'Welcome to bezkoder application.' })
 })
-
-// User.register(new User(testUser), "test", function (err: Error, account) {
-//   if (err) {
-//     console.error(err)
-//     return
-//   }
-//   console.log("Successfully created testUser")
-// })
+app.use(notFoundHandler())
+app.use(errorHandler())
 
 export default app
