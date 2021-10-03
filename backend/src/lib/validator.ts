@@ -3,15 +3,15 @@ import InputValidationError from './errors'
 
 const UserValidator: Validator = new Validator({
   // _id let it autogenerate by mongodb
-  username: {
-    type: String
-  },
-  firstName: {
-    type: String
-  },
-  lastName: {
-    type: String
-  },
+  // username: {
+  //   type: String
+  // },
+  // firstName: {
+  //   type: String
+  // },
+  // lastName: {
+  //   type: String
+  // },
   password: {
     type: String,
     required: true
@@ -20,9 +20,9 @@ const UserValidator: Validator = new Validator({
     type: String,
     required: true
   },
-  phoneNumber: {
-    type: String
-  }
+  // phoneNumber: {
+  //   type: String
+  // }
 })
 
 const LoginValidator = new Validator({

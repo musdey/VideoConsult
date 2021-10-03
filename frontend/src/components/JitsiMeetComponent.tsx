@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ProgressComponent from '@material-ui/core/CircularProgress';
 
-function JitsiMeetComponent() {
+const JitsiMeetComponent: React.FunctionComponent = () => {
     const [loading, setLoading] = useState(true);
     const containerStyle = {
         width: '800px',

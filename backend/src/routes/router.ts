@@ -10,9 +10,7 @@ import verifySignUp from '../middleware/verifySignup'
 const router = express.Router()
 
 router.post('*', verifyBody)
-router.post(
-  '/auth/signup', verifySignUp.checkDuplicateUsernameOrEmail, signup
-)
+router.post('/auth/signup', verifySignUp.checkDuplicateUsernameOrEmail, signup)
 router.post('/auth/signin', signin)
 router.post('/auth/signinWithOTP', signinWithOTP)
 router.post('/auth/requestOTP', requestOTP)

@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express'
-import router from './routes/router'
+import routerV1 from './routes/router'
 import logger from 'morgan'
 import cors from 'cors'
 import * as dotenv from 'dotenv'
@@ -34,10 +34,11 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   next()
 })
 app.use(cors())
+app.use(express.json())
 // app.use(express.static(path.join(__dirname, 'public')))
 
 // Setup routes
-app.use('/api', router)
+app.use('/api/v1', routerV1)
 app.get('/hi', (req, res) => {
   res.json({ message: 'Welcome to bezkoder application.' })
 })
