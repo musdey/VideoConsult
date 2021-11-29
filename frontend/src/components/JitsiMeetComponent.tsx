@@ -23,11 +23,11 @@ const JitsiMeetComponent: React.FunctionComponent = () => {
             document.body.appendChild(script);
         });
 
-    function startConference() {
+    function startConference(room: string) {
         try {
             const domain = 'localhost:8443';
             const options: JitsiMeetOptions = {
-                roomName: 'roomName',
+                roomName: room,
                 height: 400,
                 parentNode: document.getElementById('jitsi-container'),
                 interfaceConfigOverwrite: {

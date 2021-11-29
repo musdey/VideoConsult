@@ -1,5 +1,4 @@
 import fetch from 'node-fetch'
-import fetchIntercept from 'fetch-intercept'
 
 const protocol = 'http://'
 const host = window.location.hostname
@@ -10,7 +9,10 @@ const getUserData = async () => {
   try {
     const result = await fetch(url, {
       method: 'get',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + localStorage.getItem("TOKEN") }
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Token ' + localStorage.getItem('TOKEN')
+      }
     })
     const body = await result.json()
 
@@ -20,8 +22,7 @@ const getUserData = async () => {
   }
 }
 
-const signup = async (
-  email: string, password: string): Promise<any> => {
+const signup = async (email: string, password: string): Promise<any> => {
   const obj = { email, password }
   const url = `${protocol + host + port}/api/v1/auth/signup`
   try {
@@ -48,7 +49,7 @@ const signin = async (email: string, password: string): Promise<any> => {
   if (result.ok) {
     return await result.json()
   } else {
-    throw new Error("Unauthorized")
+    throw new Error('Unauthorized')
   }
 }
 

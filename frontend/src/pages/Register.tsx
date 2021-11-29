@@ -17,7 +17,6 @@ import api from '../lib/api'
 import { Persist } from 'formik-persist'
 import Copyright from '../components/Copyright'
 import Snackbar from '@material-ui/core/Snackbar'
-import Alert from '@material-ui/lab/Alert'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -217,7 +216,7 @@ const Register: React.FunctionComponent = () => {
       <Box mt={8}>
         <Copyright />
       </Box>
-      <Snackbar
+      {/* <Snackbar
         open={snackbarOpen}
         autoHideDuration={7000}
         onClose={() => setSnackbarOpen(false)}
@@ -231,7 +230,7 @@ const Register: React.FunctionComponent = () => {
         >
           {snackbarText}
         </Alert>
-      </Snackbar>
+      </Snackbar> */}
     </Container>
   )
 }

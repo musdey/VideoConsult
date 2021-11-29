@@ -36,23 +36,53 @@ const isAdmin = async (req: any, res: Response, next: NextFunction) => {
   }
 }
 
-const isModerator = async (req: any, res: Response, next: NextFunction) => {
+const isShopOwner = async (req: any, res: Response, next: NextFunction) => {
   const IUser = await User.findById(req.userId).exec()
   if (!IUser) {
     res.status(500).send({ message: 'User not found!' })
     return
   }
 
-  if (IUser.role === 'MODERATOR') {
+  if (IUser.role === 'SHOPOWNER') {
+    next()
+  } else {
+    res.status(403).send({ message: 'Require SHOPOWNER Role!' })
+  }
+}
+
+const isEmployee = async (req: any, res: Response, next: NextFunction) => {
+  const IUser = await User.findById(req.userId).exec()
+  if (!IUser) {
+    res.status(500).send({ message: 'User not found!' })
+    return
+  }
+
+  if (IUser.role === 'SHOPOWNER' || IUser.role === 'EMPLOYEE') {
     next()
   } else {
     res.status(403).send({ message: 'Require Moderator Role!' })
   }
 }
 
+const isCustomer = async (req: any, res: Response, next: NextFunction) => {
+  const IUser = await User.findById(req.userId).exec()
+  if (!IUser) {
+    res.status(500).send({ message: 'User not found!' })
+    return
+  }
+
+  if (IUser.role === 'SHOPOWNER' || IUser.role === 'EMPLOYEE' || IUser.role === 'CUSTOMER') {
+    next()
+  } else {
+    res.status(403).send({ message: 'Require Customer Role' })
+  }
+}
+
 const authJwt = {
   verifyToken,
   isAdmin,
-  isModerator
+  isShopOwner,
+  isEmployee,
+  isCustomer
 }
 export default authJwt

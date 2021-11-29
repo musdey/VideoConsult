@@ -1,12 +1,6 @@
 'use strict'
 import nodemailer, {SentMessageInfo} from 'nodemailer'
-declare global {
-  enum MailType {
-    OTP = 'OTP',
-    RESETPW = 'RESETPW',
-    VERIFYMAIL = 'VERIFYMAIL'
-  }
-}
+import { MailType } from '../types'
 const hostName = process.env.HOST_NAME || 'localhost:3000'
 const applicationName = process.env.APPLICATION_NAME || 'Test Application'
 const applicationEmail = process.env.APPLICATION_EMAIL || 'test@application.com'

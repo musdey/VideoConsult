@@ -10,6 +10,7 @@ interface ILobby extends Document {
     pendingCustomer: [IUser]
     begin: string
     end: string
+    active: boolean
 }
 
 const LobbySchema = new Schema(
@@ -37,6 +38,9 @@ const LobbySchema = new Schema(
     },
     end: {
         type: String
+    },
+    active: {
+        type: Boolean
     }
   },
   { strict: false, versionKey: false }

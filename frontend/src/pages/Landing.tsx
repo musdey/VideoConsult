@@ -1,67 +1,18 @@
 import React, { useRef } from 'react'
-import Button from '@material-ui/core/Button'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import CardMedia from '@material-ui/core/CardMedia'
-import CssBaseline from '@material-ui/core/CssBaseline'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
-import Link from '@material-ui/core/Link'
+import { Container, Row, Button } from 'react-bootstrap'
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+    <h2 color="textSecondary">
+      {'Copyright © CICEK.DIGITAL'}
+      <a color="inherit" href="https:cicek.digital">
         Your Website
-      </Link>{' '}
+      </a>
       {new Date().getFullYear()}
       {'.'}
-    </Typography>
+    </h2>
   )
 }
-
-const useStyles = makeStyles((theme) => ({
-  image: {
-    backgroundImage: 'url("images/restaurant1.jpg")',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    width: '100%',
-    height: '300px',
-  },
-  icon: {
-    marginRight: theme.spacing(2),
-  },
-  heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6, 0, 6),
-  },
-  heroButtons: {
-    marginTop: theme.spacing(4),
-  },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(6),
-  },
-}))
 
 const cards = [
   {
@@ -99,50 +50,45 @@ const scrollToRef = (ref: any) => {
 export default function Album() {
   const myRef = useRef(null)
   const executeScroll = () => scrollToRef(myRef)
-  const classes = useStyles()
 
   return (
     <React.Fragment>
-      <CssBaseline />
       <main>
         {/* Hero unit */}
-        <div className={classes.image}></div>
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
+        <iframe width="664" height="350 "
+          src="https://www.youtube.com/embed/LUetykHsxqQ?rel=0&amp;autoplay=1&mute=1&showinfo=0&controls=0"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen></iframe>
+        <div>
+          <Container >
+            <h1
               color="textPrimary"
-              gutterBottom
             >
-              Willkommen bei Registro
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
+              Welcome to VideoConsult
+            </h1>
+            <h5
               color="textSecondary"
-              paragraph
             >
-              Registro ist eine kostenlose Platform für alle
-              GeschäftsinhaberInnen, um einfach, sicher und unkompliziert Gäste
-              zu erfassen.
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justifyContent="center">
-                <Grid item>
+              VideoConsult is a tool to connect small business owner with customers with only one simple click!
+            </h5>
+            <div>
+              <Container>
+                <Row >
                   <Button variant="contained" href="/register" color="primary">
                     Registieren
                   </Button>
-                </Grid>
-                <Grid item>
+                </Row>
+                <Row>
+
                   <Button variant="contained" href="/login" color="primary">
                     Login
                   </Button>
-                </Grid>
-              </Grid>
+                </Row>
+              </Container>
             </div>
-            <div className={classes.heroButtons}>
+            {/* <div className={classes.heroButtons}>
               <Grid container spacing={1} justifyContent="center">
                 <Grid item>
                   <Button
@@ -155,39 +101,30 @@ export default function Album() {
                   </Button>
                 </Grid>
               </Grid>
-            </div>
+            </div> */}
           </Container>
           {/* End hero unit */}
         </div>
 
         {/* <div className={classes.image}></div> */}
 
-        <div className={classes.heroContent} id="howto">
-          <Container maxWidth="sm">
-            <Typography
-              component="h3"
-              variant="h3"
-              align="center"
+        <div id="howto">
+          <Container >
+            <h3
               color="textPrimary"
-              gutterBottom
             >
               Philosophie
-            </Typography>
-            <Typography
-              variant="h5"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
+            </h3>
+            <h5>
               Die aktuelle Pandemie erschwert uns in jeder Hinsicht das tägliche
               Leben. Diese Plattform soll dem ohnehin stark angeschlagenen
               Dienstleistungssektor unter die Arme zu greifen. In nur einfachen
               Schritten setzen Sie Registro für Ihr Unternehmen ein!
-            </Typography>
+            </h5>
           </Container>
         </div>
 
-        <Container className={classes.cardGrid} maxWidth="md">
+        {/* <Container className={classes.cardGrid} maxWidth="md">
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card.key} xs={12} sm={6} md={4}>
@@ -210,21 +147,16 @@ export default function Album() {
               </Grid>
             ))}
           </Grid>
-        </Container>
+        </Container> */}
       </main>
       {/* Footer */}
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom>
+      <footer>
+        <h6>
           Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
+        </h6>
+        <p>
           Something here to give the footer a purpose!
-        </Typography>
+        </p>
         <Copyright />
       </footer>
       {/* End footer */}

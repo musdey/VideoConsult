@@ -62,6 +62,7 @@ const signin: Handler = async (req: Request, res: Response, next: NextFunction) 
       username: user.username,
       email: user.email,
       accessToken: token,
+      role: user.role
     })
   } catch (err) {
     return next(err)
@@ -125,7 +126,7 @@ const signinWithOTP: Handler = async (req: Request, res: Response, next: NextFun
     const otp = await UserLoginOTP.findOne({ email: req.body.email, otpExpires: { $gt: new Date() } })
     if (!otp || otp.otp !== req.body.otp) {
       //return res.status(401).send({ message: 'OTP not found or incorrect' })
-      return next('OTPERROR')
+      return next(new Error('No, OTP provided. Please add otp or request one.'))
     }
 
     const token = jwt.sign({ id: user.id }, secret, {

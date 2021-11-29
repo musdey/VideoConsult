@@ -8,6 +8,7 @@ import initalizeRoles from './db/initalizeRoles'
 import notFoundHandler from "./middleware/not-found-handler";
 import errorHandler from "./middleware/error-handler";
 import dbNotUp from './middleware/db-not-up'
+import crypto from 'crypto'
 
 dotenv.config()
 
@@ -44,5 +45,10 @@ app.get('/hi', (req, res) => {
 })
 app.use(notFoundHandler())
 app.use(errorHandler())
+
+crypto.randomBytes(24, function(err, buffer) {
+  var token = buffer.toString('hex');
+  console.log(token)
+  });
 
 export default app
